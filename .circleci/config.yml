@@ -20,6 +20,10 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Install psql
+          command: sudo apt-get update -y && sudo apt-get install postgresql-client-9.4 -y
+
       # Which version of bundler?
       - run:
           name: Which bundler?
