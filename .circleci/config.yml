@@ -53,6 +53,20 @@ jobs:
           name: Database setup
           command: psql --username="user" Rails-Test_test < db/structure.sql
 
+      - restore_cache:
+          keys:
+            - rails-demo-npm-{{ checksum "package-lock.json" }}
+            - rails-demo-npm-
+
+      - run:
+          name: NPM Install
+          command: npm install
+
+      - save_cache:
+          key: rails-demo-npm-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+
       # Run rspec in parallel
       - type: shell
         command: |
