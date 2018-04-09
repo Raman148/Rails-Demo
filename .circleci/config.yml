@@ -22,7 +22,7 @@ jobs:
 
       - run:
           name: Install psql
-          command: sudo apt-get install postgresql-9.6 -y
+          command: sudo apt-get install postgresql=9.6 -y
 
       # Which version of bundler?
       - run:
