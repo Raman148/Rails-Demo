@@ -67,6 +67,10 @@ jobs:
           paths:
             - node_modules
 
+      - type: shell
+        command: |
+          bundle exec rake assets:precompile
+
       # Run rspec in parallel
       - type: shell
         command: |
