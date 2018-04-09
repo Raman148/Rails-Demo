@@ -20,6 +20,10 @@ jobs:
     steps:
       - checkout
 
+      - run:
+        name: Install psql
+        command: apt-get install postgresql-client -y
+        
       # Which version of bundler?
       - run:
           name: Which bundler?
