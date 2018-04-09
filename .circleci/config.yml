@@ -22,7 +22,7 @@ jobs:
 
       - run:
           name: Install psql
-          command: sudo apt-get update -y && sudo apt-get install postgresql-client-9.4 -y
+          command: sudo apt-get install postgresql-client-9.4 -y
 
       # Which version of bundler?
       - run:
@@ -51,7 +51,7 @@ jobs:
 
       - run:
           name: Database setup
-          command: psql Rails-Test_test < db/structure.sql
+          command: psql --username="" Rails-Test_test < db/structure.sql
 
       # Run rspec in parallel
       - type: shell
