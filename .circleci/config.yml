@@ -21,9 +21,9 @@ jobs:
       - checkout
 
       - run:
-        name: Install psql
-        command: apt-get install postgresql-client -y
-        
+          name: Install psql
+          command: sudo apt-get install postgresql-client@9.6 -y
+
       # Which version of bundler?
       - run:
           name: Which bundler?
