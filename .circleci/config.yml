@@ -44,18 +44,18 @@ jobs:
           key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-            
+
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - run:
           name: Database setup
-          command: psql --username="user" Rails-Test_test < db/structure.sql
+          command: psql --username=$POSTGRES_USER $POSTGRES_DB < db/structure.sql
 
       - restore_cache:
           keys:
-            - rails-demo-npm-{{ checksum "package-lock.json" }}
+            - rails-demo-npm-{{ checksum "package.json" }}
             - rails-demo-npm-
 
       - run:
@@ -63,7 +63,7 @@ jobs:
           command: npm install
 
       - save_cache:
-          key: rails-demo-npm-{{ checksum "package-lock.json" }}
+          key: rails-demo-npm-{{ checksum "package.json" }}
           paths:
             - node_modules
 
@@ -74,12 +74,12 @@ jobs:
       # Run rspec in parallel
       - type: shell
         command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
+          bundle exec rspec \
+            --profile 10 \
+            --format RspecJunitFormatter \
+            --out test_results/rspec.xml \
+            --format progress \
+            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
       # Save test results for timing analysis
       - store_test_results:
