@@ -51,7 +51,7 @@ jobs:
 
       - run:
           name: Database setup
-          command: psql --username=$POSTGRES_USER $POSTGRES_DB < db/structure.sql
+          command: printenv; psql --username=$POSTGRES_USER $POSTGRES_DB < db/structure.sql
 
       - restore_cache:
           keys:
